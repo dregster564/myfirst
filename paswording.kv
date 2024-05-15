@@ -1,0 +1,180 @@
+# ScrollClass.py + PASSWORDING.KV + scrollscreen.kv
+#:import fix fixtures
+# Поля общих настроек виджетов
+<ItemLabel@Label>:
+    id:self.superScrollLabel
+    padding: 10
+    spacing:5
+    size_hint_y:None
+    height:self.texture_size[1]
+    text_size:self.width,None
+    markup:True
+
+<ItemBoxlayout@BoxLayout>:
+    orientation:'vertical'
+    spacing:10
+    padding:10
+    canvas.before:
+        Color:
+            rgba:fix.colorCentrlayout
+        RoundedRectangle:
+            on_radius:[30]
+            pos:self.pos
+            size:self.size
+
+<ItemButton@Button>:
+    text:'Вернуть'
+    font_size:'16dp'
+    size_hint:(1,0.1)
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    halign:'center'
+    text_size: self.width, None
+    background_normal:''
+    canvas.before:
+        Color:
+            rgba: fix.colorReturnHandBook if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
+
+#Балловая оценка
+<Ball>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.ballText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Рельсы и скрепления
+<Rails>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.railsText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Шпалы и брусья
+<Sleepers>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.sleepersText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Балласт, балластная призма, земляное полотно
+<Ballast>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.ballastText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Габарит
+<OverallSize>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.overallSizeText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Сигналы, сигнальные и путевые знаки, устройства путевого заграждения
+<Fence>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.fenceText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# ЖД ПЕРЕЕЗДЫ
+<Crossing>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.crossingText
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Стрелочные переводы содержание
+<ArrowSwitchese>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.arrow_switches_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Стрелочные переводы ширина колеи
+<PatternSwitchese>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.pattern_switches_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Стрелочные переводы ЖЕЛОБА
+<GuttersSwitchese>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.gutters_switches_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Стрелочные переводы ОРДИНАТЫ
+<OrdinatesSwitchese>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.ordinates_switches_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Шлифовка остряков
+<PolishingWits>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.polishing_wits_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+#Стрелочные переводы износы
+<WearSwitches>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.wear_switches_text
+        ItemButton:
+            on_press:root.on_press_button_back(self)
+# Рельсовые цепи
+<RailChains>:
+    ItemBoxlayout:
+        ScrollView:
+            scroll_type:['bars','content']
+            bar_width:7
+            ItemLabel:
+                text: fix.railChainsText
+        ItemButton:
+            on_press:root.on_press_button_back(self)

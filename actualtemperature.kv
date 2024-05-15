@@ -1,0 +1,69 @@
+#:import fix fixtures
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput,ActualTemperature наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в ActualTemperature и тд
+# класс в майн расчет возвышения переводной кривой
+
+<ActualTemperature>:
+    superScrollLabel:superScrollLabel
+    actualtemperature:actualtemperature
+    offset:offset
+    line:line
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.4)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Фактическая температура рельса, °C'
+                TopLabel:
+                    text:'Смещение, мм'
+                TopLabel:
+                    text:'Длина участка раскрепления, м'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.5,1
+                TopTextInput:
+                    id:actualtemperature
+                    text:'20'
+                TopTextInput:
+                    id:offset
+                    text:'5'
+                TopTextInput:
+                    id:line
+                    text:'50'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    id:superScrollLabel
+                    text: fix.actualtemperatureText
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    text:'Плеть укоротилась'
+                    on_press:root.add_summ(self)
+                ResultButton:
+                    text:'Плеть удлинилась'
+                    on_press:root.add_difference(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+######### END WlipCalculator #################

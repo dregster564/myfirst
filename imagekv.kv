@@ -1,0 +1,82 @@
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в Imagekv и тд
+# класс в майн расчет возвышения переводной кривой
+#:import fix fixtures
+<Imagekv>:
+    superScrollLabel:superScrollLabel
+    startkm:startkm
+    startmeter:startmeter
+    finishkm:finishkm
+    finishmeter:finishmeter
+    elevation:elevation
+    graduation:graduation
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.45)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Начало(конец) круговой кривой'
+                TopLabel:
+                    text:'Начало(конец) переходной кривой'
+                TopLabel:
+                    text:'Возвышение круговой кривой, мм'
+                TopLabel:
+                    text:'Градация, м'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.6,1
+                BoxLayout:# start
+                    TopTextInput:
+                        id:startkm
+                        text:'14'
+                    TopTextInput:
+                        id:startmeter
+                        text:'950'
+                BoxLayout:# finish
+                    TopTextInput:
+                        id:finishkm
+                        text:'15'
+                    TopTextInput:
+                        id:finishmeter
+                        text:'5'
+                TopTextInput:
+                    id:elevation
+                    text:'50'
+                TopTextInput:
+                    id:graduation
+                    text:'5'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    size_hint_y:1
+                    id:superScrollLabel
+                    text:fix.imageText
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+
+######### END Imagekv #################

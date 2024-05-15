@@ -1,0 +1,66 @@
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в Imagekv и тд
+# класс в майн расчет возвышения переводной кривой
+#:import fix fixtures
+<NotAcceleration>:
+    superScrollLabel:superScrollLabel
+    speed:speed
+    radius:radius
+    rise:rise
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.4)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Скорость движения в кривой,V км/ч'
+                TopLabel:
+                    text:'Радиус кривой,R м'
+                TopLabel:
+                    text:'Возвышение наружного рельса в кривой,h мм'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.5,1
+                TopTextInput:
+                    id:speed
+                    text:'80'
+                TopTextInput:
+                    id:radius
+                    text:'450'
+                TopTextInput:
+                    id:rise
+                    text:'60'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    size_hint_y:None
+                    id:superScrollLabel
+                    text:fix.notaccelerationText
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+
+######### END Imagekv #################

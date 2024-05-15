@@ -1,0 +1,78 @@
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в Imagekv и тд
+# класс в майн расчет возвышения переводной кривой
+#:import fix fixtures
+
+<Ballcalculator>:
+    superScrollLabel:superScrollLabel
+    otl:otl
+    hor:hor
+    udo:udo
+    neud:neud
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.4)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Отлично'
+                TopLabel:
+                    text:'Xopoшo'
+                TopLabel:
+                    text:'Удовлетворительно'
+                TopLabel:
+                    text:'Неудовлетворительно'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.5,1
+                TopTextInput:
+                    id:otl
+                    input_filter:'float'
+                    text:'14.5'
+                TopTextInput:
+                    id:hor
+                    input_filter:'float'
+                    text:'5'
+                TopTextInput:
+                    id:udo
+                    input_filter:'float'
+                    text:'5'
+                TopTextInput:
+                    id:neud
+                    input_filter:'float'
+                    text:'1'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    id:superScrollLabel
+                    size_hint_y:None
+                    text: fix.ballcalkulatorText
+
+        # Down_widgets
+
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+######### END Ballcalculator #################

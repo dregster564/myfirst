@@ -1,0 +1,107 @@
+# ScrollClass.py + PASSWORDING.KV + scrollscreen.kv
+# определение бокса. НЕ наследуется, определен в данном месте
+<ScrollBoxlayout@BoxLayout>:
+    orientation:'vertical'
+    spacing:10
+    padding:10
+    height: self.minimum_height # Скролл не откидывает назад, кнопки нормального размера
+    size_hint: (1, None)# None дает возможность скроллить кнопки
+
+# определение кнопки,НЕ наследуется, определен в данном месте
+<ScrollButton@Button>:
+    #Овальная кнопка с границей
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    font_size:'15dp'
+    halign:'center'
+    text_size: self.width, None
+    background_normal:''
+    size_hint: 1, None
+    size: .1, 100 # Расчитывает только высоту кнопки 50 пикс
+
+    canvas.before:
+        Color:
+            rgba: fix.colorMainButton if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
+        Color:
+            rgba: fix.colorBorder
+        Line:
+            width: 2
+            rounded_rectangle: self.x, self.y, self.width, self.height,20
+            joint:'round'
+############$$$$$$$$$$
+
+# Позиционирование кнопок на экране в разделе СПРАВОЧНИК
+<ScreenMain>:
+    ScrollView:
+        scroll_type:['bars','content']
+        bar_width:7
+
+        ScrollBoxlayout:
+
+            ScrollButton:
+                text:'Геометрия пути'
+                on_press:
+                    root.on_press_button_Ball(self)
+            ScrollButton:
+                text:'Рельсы и скрепления'
+                on_press:
+                    root.on_press_button_Rails(self)
+
+            ScrollButton:
+                text:'Шпалы и переводные брусья'
+                on_press:
+                    root.on_press_button_Sleepers(self)
+            ScrollButton:
+                text:'Балласт, балластная призма, земляное полотно'
+                on_press:
+                    root.on_press_button_Ballast(self)
+
+            ScrollButton:
+                text:'Габарит'
+                on_press:
+                    root.on_press_button_Overall_size(self)
+            ScrollButton:
+                text:'Сигналы, сигнальные и путевые знаки, устройства путевого заграждения'
+                on_press:
+                    root.on_press_button_Fence(self)
+            ScrollButton:
+                text:'Железнодорожные переезды'
+                on_press:
+                    root.on_press_button_Crossing(self)
+            ScrollButton:
+                text:'Содержание стрелочных переводов'
+                on_press:
+                    root.on_press_button_Arrow_switches(self)
+            ScrollButton:
+                text:'Нормы устройства стрелочных переводов и глухих пересечений по ширине колеи'
+                on_press:
+                    root.on_press_button_Pattern_switches(self)
+            ScrollButton:
+                text:'Нормы устройства стрелочных переводов и глухих пересечений по ширине желобов'
+                on_press:
+                    root.on_press_button_Gutters_switches(self)
+            ScrollButton:
+                text:'Нормы устройства стрелочных переводов и глухих пересечений по ординатам'
+                on_press:
+                    root.on_press_button_Ordinates_switches(self)
+            ScrollButton:
+                text:'Шлифовка остряков'
+                on_press:
+                    root.on_press_button_Polishing_wits(self)
+            ScrollButton:
+                text:'Износы стрелочных переводов'
+                on_press:
+                    root.on_press_button_Wear_switches(self)
+            ScrollButton:
+                text:'Рельсовые цепи'
+                on_press:
+                    root.on_press_button_Rail_chains(self)
+            ####
+
+
+
+
+#END Позиционирование кнопок на экране в разделе СПРАВОЧНИК

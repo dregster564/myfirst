@@ -1,0 +1,171 @@
+#:import fix fixtures
+# Расчет стрел изгиба в переводной и круговой кривой
+####### Настройки конфигурации виджетов ####
+<ILabel@Label>:
+    padding: 10
+    spacing:10
+    size_hint_y:None
+    halign:'center'#['left', 'center', 'right', 'justify', 'auto']
+    height:self.texture_size[1]
+    text_size:self.width,None
+    markup:True
+
+<Ilayout@BoxLayout>:
+    #Бокс скролла
+    orientation:'vertical'
+    spacing:2
+    padding:2
+    canvas.before:
+        Color:
+            rgba:fix.colorCentrlayout # in fixtures.py
+        RoundedRectangle:
+            on_radius:[30]
+            pos:self.pos
+            size:self.size
+
+#Нижние кнопки расчет, главное, очистка
+<IButton@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    font_size:'18dp'
+    size_hint:(1,1)
+    background_normal:''
+<MainButton@IButton>:
+    canvas.before:
+        Color:
+            rgba: fix.colorButtonBack if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+    text:'Главное меню'
+<ResultButton@IButton>:
+    canvas.before:
+        Color:
+            rgba: fix.colorCalculationButton if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+    text:'Расчет'
+
+
+<ClearButton@IButton>:
+    canvas.before:
+        Color:
+            rgba: fix.colorcleanButton if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+    text:'Очистить'
+
+#меню ввода и инфо
+<TopLabel@Label>:
+    padding: 10
+    color:fix.colorTextTopLabel
+    halign:'center' #['left', 'center', 'right', 'justify', 'auto']
+    text_size:self.width,None
+    font_size:'17dp'
+    canvas.before:
+        Color:
+            rgba:fix.colorTopLabel # in fixtures.py
+        RoundedRectangle:
+            on_radius:[30]
+            pos:self.pos
+            size:self.size
+            source: 'Icon/bg2.jpg'
+# ввод текста в поле ввода ТОП
+<TopTextInput@TextInput>:
+    hint_text:'0'
+    input_type:'number'
+    input_filter:'int'
+    multiline:False
+
+
+####### END Config #############
+
+# класс в майн расчет рихтовки переводной кривой
+<Straightening>:
+    superScrollLabel:superScrollLabel
+    startkm:startkm
+    startmeter:startmeter
+    finishkm:finishkm
+    finishmeter:finishmeter
+    chord:chord
+    radius:radius
+    graduation:graduation
+
+    # Корневой виджет Ilayout
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.5)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Начало(конец) круговой кривой'
+                TopLabel:
+                    text:'Начало(конец) переходной кривой'
+                TopLabel:
+                    text:'Длина хорды, м'
+                TopLabel:
+                    text:'Радиус круговой кривой, м'
+                TopLabel:
+                    text:'Градация, м'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.6,1
+                BoxLayout:# start
+                    TopTextInput:
+                        id:startkm
+                        text:'14'
+                    TopTextInput:
+                        id:startmeter
+                        text:'900'
+                BoxLayout:# finish
+                    TopTextInput:
+                        id:finishkm
+                        text:'15'
+                    TopTextInput:
+                        id:finishmeter
+                        text:'0'
+                TopTextInput:
+                    id:chord
+                    text:'20'
+                TopTextInput:
+                    id:radius
+                    text:'500'
+                TopTextInput:
+                    id:graduation
+                    text:'10'
+
+
+
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    id:superScrollLabel
+                    text: fix.straightening
+                    size_hint_y:1
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+######### END #################

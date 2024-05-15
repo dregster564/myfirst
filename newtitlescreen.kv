@@ -1,0 +1,123 @@
+#:import fix fixtures
+#:import m main
+# Титульная страница
+####### Настройки конфигурации виджетов ####
+###111
+<-WeatherButton@Button>:
+    # create the desired properties
+    btn_color_not_pressed: ""
+    btn_color_pressed: ''
+    color_Button:(1,1,1,1)#Цвет заднего фона не нажатой кнопки погода
+    size_hint:None,None
+    size:self.texture_size[0]*2,self.texture_size[1]*2
+    pos_hint:{'right':0.9,'y':0.1}
+    #pos_hint:{"right":0.2,"top":0.5}
+    font_size:'18dp'
+    markup:True
+    canvas:
+        Color:
+            # reference the above properties
+            rgba:  self.color_Button if self.state=='normal' else fix.colorNotButton
+        RoundedRectangle:
+            source:self.btn_color_not_pressed if self.state=='normal' else self.btn_color_pressed
+            size: self.size
+            pos: self.pos
+            radius: [20]
+        Color:
+            rgba: 1,0,0,1
+        Line:
+            width: 2
+            rounded_rectangle: self.x, self.y, self.width, self.height,20
+            joint:'round'
+
+        # this is copied from style.kv to show the Button text
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            texture: self.texture
+            size: self.texture_size
+            pos: int(self.center_x - self.texture_size[0]/2.), int(self.center_y - self.texture_size[1]/2.)
+
+
+#Нижние кнопки расчет, главное, очистка
+<ScButton@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    font_size:'15dp'
+    halign:'center'
+    size_hint: 1, 1
+    text_size: self.width, None
+    background_normal:''
+
+<ScMainButton@ScButton>:
+    canvas.before:
+        Color:
+            rgba: fix.colorMainButton if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
+        Color:
+            rgba: fix.colorBorder
+        Line:
+            width: 2
+            rounded_rectangle: self.x, self.y, self.width, self.height,20
+
+
+
+
+
+####### END Config #############
+<NewTitleScreen>:
+    GridLayout:
+        rows:2
+        BoxLayout:
+            size_hint:(1,0.4)
+            orientation:'vertical'
+            FloatLayout:
+                canvas:
+                    RoundedRectangle:
+                        source:fix.TitleScreen
+                        pos: self.pos
+                        size: self.size
+                        radius: [20,]
+
+                WeatherButton:
+                    id:fg
+                    color:fix.colorWeatherText
+                    #pos_hint:{'x':0.05,'y':0.1}
+                    color_Button:fix.colorWeatherButton
+                    btn_color_not_pressed: fix.sourceWeather
+                    btn_color_pressed: ''
+                    text: f'{fix.yellow}[b]Прогноз[/b]{fix.rgbClose}'
+                    on_press:root.press_macrobutton(self)
+
+
+
+        BoxLayout:
+            orientation:'vertical'
+            ScMainButton:
+                text:f'   Расчет балловой оценки   '
+                on_press:root.on_press_button_Ballcalculator(self)
+            ScMainButton:
+                text:f'   Расчет фактической температуры рельсовой плети   '
+                on_press:root.on_press_button_ActualTemperature(self)
+            ScMainButton:
+                text:f'   Расчет подвижек при разрядке рельсовой плети   '
+                on_press:root.on_press_button_WlipCalculator(self)
+            ScMainButton:
+                text:f'   Расчет возвышения переводной кривой   '
+                on_press:root.on_press_button_Imagekv(self)
+            ScMainButton:
+                text:f'   Расчет стрел изгиба переводной кривой   '
+                on_press:root.on_press_button_Straightening(self)
+            ScMainButton:
+                text:f'   Расчет непогашенного ускорения   '
+                on_press:root.on_press_button_NotAcceleration(self)
+            ScMainButton:
+                text:f' СПРАВОЧНИК '
+                on_press:root.on_press_button_HandBook(self)
+            ScMainButton:
+                text:f'   О программе   '
+                on_press:root.on_press_button_AboutProgram(self)
+
+

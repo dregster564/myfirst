@@ -1,0 +1,42 @@
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в Imagekv и тд
+# класс в майн расчет возвышения переводной кривой
+#:import fix fixtures
+
+
+<AboutProgram>:
+    BoxLayout:
+        orientation:'vertical'
+    # Корневой виджет Ilayout
+
+        BoxLayout:
+            canvas:
+                Color:
+                    # reference the above properties
+                    rgba:  0.1,0.1,0.2,1
+                RoundedRectangle:
+                    #source:'Icon/titlebg.png'
+                    size: self.size
+                    pos: self.pos
+                    radius: [20]
+                #Color:
+                    #rgba: 0.5,0,0,1
+                #Line:
+                    #width: 6
+                    #rounded_rectangle: self.x, self.y, self.width, self.height,20
+                    #joint:'round'
+            ILabel:
+                id:superScrollLabel
+                font_size:'20dp'
+                size_hint_y:1
+                text: fix.aboutProgramText
+
+        # Down_widgets
+        GridLayout:
+            cols:1
+            size_hint:1,0.07
+            MainButton:
+                on_press:root.on_press_button_back(self)
+
+######### END AboutProgram #################

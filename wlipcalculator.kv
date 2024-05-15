@@ -1,0 +1,66 @@
+#:import fix fixtures
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в WlipCalculator и тд
+# класс в майн расчет возвышения переводной кривой
+
+<WlipCalculator>:
+    superScrollLabel:superScrollLabel
+    optimal_temperature:optimal_temperature
+    actual_temperature:actual_temperature
+    distanc:distanc
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.4)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Оптимальная температура рельса, °C'
+                TopLabel:
+                    text:'Фактическая температура рельса, °C'
+                TopLabel:
+                    text:'Длина участка раскрепления, м'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.5,1
+                TopTextInput:
+                    id:optimal_temperature
+                    text:'35'
+                TopTextInput:
+                    id:actual_temperature
+                    text:'25'
+                TopTextInput:
+                    id:distanc
+                    text:'400'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    id:superScrollLabel
+                    text: fix.wlipcalculatorText
+                    size_hint_y:1  # Текст по центру
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+######### END WlipCalculator #################
