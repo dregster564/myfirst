@@ -25,6 +25,7 @@ Builder.load_file('wlipcalculator.kv')
 Builder.load_file('imagekv.kv')
 Builder.load_file('straightening.kv')
 Builder.load_file('notacceleration.kv')
+Builder.load_file('productivity.kv')
 Builder.load_file('aboutprogram.kv')
 
 class NewTitleScreen(Screen):
@@ -92,10 +93,14 @@ class NewTitleScreen(Screen):
     def on_press_button_HandBook(self, *args):
         self.manager.transition.direction = 'left'
         self.manager.current = 'HandBook'
+    def on_press_button_Productivity(self,*args):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'Productivity'
 
     def on_press_button_AboutProgram(self, *args):
         self.manager.transition.direction = 'left'
         self.manager.current = 'AboutProgram'
+
 
 class Ballcalculator(Screen):
     """Класс выполняет расчет балловой оценки #### Текст для модулей KV в fixtures.kv"""
@@ -417,7 +422,6 @@ class NotAcceleration(Screen):
                 self.formula = f'{orange}Величина поперечного непогашенного ускорения Анп: \n' \
                                f'{lime}{round(((int(self.speed.text)**2)/(13*int(self.radius.text)) - 0.0061*int(self.rise.text)),2)}{rgbClose} м/с²{rgbClose}'
                 self.superScrollLabel.text = self.formula
-                print(self.formula)
             else:
                 self.formula = f'{red}Введите данные!{rgbClose}'
             self.superScrollLabel.text = self.formula
@@ -429,6 +433,33 @@ class NotAcceleration(Screen):
         self.speed.text = ''
         self.radius.text = ''
         self.rise.text = ''
+    def on_press_button_back(self, *args):
+        """возврат в главное меню"""
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'NewTitleScreen'
+
+class Productivity(Screen):
+    """
+    Расчет норм выработки производительности труда
+    """
+    def on_press_calculation(self,*args):
+        self.ids.superScrollLabel.size_hint_y = 1
+        try:
+            if self.norma.text and self.meter.text and self.hour.text:
+                self.formula = f'{orange}Обьем выполненной работы составит: \n' \
+                               f'{lime}{round((float(self.hour.text)*float(self.meter.text)/float(self.norma.text)),2)}{rgbClose} {rgbClose}'
+                self.superScrollLabel.text = self.formula
+            else:
+                self.formula = f'{red}Введите данные!{rgbClose}'
+            self.superScrollLabel.text = self.formula
+        except Exception:
+            self.superScrollLabel.text = ErrorCalculate
+    def add_cleer(self,*args):
+        self.ids.superScrollLabel.size_hint_y = None
+        self.superScrollLabel.text = notaccelerationText
+        self.norma.text = ''
+        self.meter.text = ''
+        self.hour.text = ''
     def on_press_button_back(self, *args):
         """возврат в главное меню"""
         self.manager.transition.direction = 'right'
@@ -468,6 +499,7 @@ class PaswordingApp(App):
         sm.add_widget(Imagekv(name = 'Imagekv'))
         sm.add_widget(Straightening(name = 'Straightening'))
         sm.add_widget(NotAcceleration(name = 'NotAcceleration'))
+        sm.add_widget(Productivity(name='Productivity'))
         sm.add_widget(HandBook(name='HandBook'))
         sm.add_widget(AboutProgram(name='AboutProgram'))
         return sm

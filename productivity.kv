@@ -1,0 +1,69 @@
+#Настройки виджетов ILabel@Label,Ilayout@BoxLayout,IButton@Button,
+# TopLabel@Label,TopTextInput@TextInput, наследуются из straightening.kv
+# т.е. меняю в straightening.kv - меняется в Imagekv и тд
+# класс в майн расчет возвышения переводной кривой
+#:import fix fixtures
+<Productivity>:
+    superScrollLabel:superScrollLabel
+    norma:norma
+    meter:meter
+    hour:hour
+    BoxLayout:
+        orientation:'vertical'
+        GridLayout:
+            size_hint:(1,0.4)
+            cols:2
+            BoxLayout:
+                orientation:'vertical'
+                TopLabel:
+                    text:'Норма времени'
+                TopLabel:
+                    text:'Измеритель,ед.'
+                TopLabel:
+                    text:'Количество человеко-часов,ч'
+            BoxLayout:
+                orientation:'vertical'
+                size_hint:0.5,1
+                TopTextInput:
+                    id:norma
+                    input_filter:'float'
+                    text:'0.845'
+                TopTextInput:
+                    id:meter
+                    input_filter:'float'
+                    text:'10'
+                TopTextInput:
+                    id:hour
+                    input_filter:'float'
+                    text:'8'
+
+
+    # Корневой виджет Ilayout
+        Ilayout:
+            ScrollView:
+                scroll_type:['bars','content']
+                bar_width:7
+                ILabel:
+                    size_hint_y:None
+                    id:superScrollLabel
+                    text:fix.notaccelerationText
+        # Down_widgets
+        GridLayout:
+            size_hint:(1,0.2)
+            rows:2
+            BoxLayout:
+                spacing:1
+                padding:1
+                ResultButton:
+                    on_press:root.on_press_calculation(self)
+                ClearButton:
+                    on_press:root.add_cleer(self)
+
+            BoxLayout:
+                spacing:1
+                padding:1
+                MainButton:
+                    on_press:root.on_press_button_back(self)
+
+
+######### END Imagekv #################
