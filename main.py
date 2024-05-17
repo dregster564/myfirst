@@ -456,7 +456,7 @@ class Productivity(Screen):
             self.superScrollLabel.text = ErrorCalculate
     def add_cleer(self,*args):
         self.ids.superScrollLabel.size_hint_y = None
-        self.superScrollLabel.text = notaccelerationText
+        self.superScrollLabel.text = productivityText
         self.norma.text = ''
         self.meter.text = ''
         self.hour.text = ''
